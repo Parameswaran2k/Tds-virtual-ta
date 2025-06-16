@@ -12,7 +12,7 @@ import aiohttp
 import asyncio
 import logging
 import base64
-from fastapi.responses import JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 import uvicorn
 import traceback
 from dotenv import load_dotenv
@@ -53,7 +53,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
+@app.get("/", response_class=HTMLResponse)
+async def root():
+    return "<h2>TDS Virtual TA API is running 🚀</h2>"
 # Verify API key is set
 if not API_KEY:
     logger.error("API_KEY environment variable is not set. The application will not function correctly.")
