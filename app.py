@@ -4,7 +4,7 @@ import json
 import sqlite3
 import numpy as np
 import re
-from fastapi import FastAPI, HTTPException, File, UploadFile, Form, Body
+from fastapi import FastAPI, HTTPException, File, Request, UploadFile, Form, Body
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional, List, Dict, Any
@@ -53,6 +53,14 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.post("/")
+async def root_post(request: Request):
+    return JSONResponse(
+        content={"message": "POST request received at root"},
+        status_code=200
+    )
+
 @app.get("/", response_class=HTMLResponse)
 async def root():
     return "<h2>TDS Virtual TA API is running 🚀</h2>"
