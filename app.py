@@ -54,16 +54,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.post("/")
-async def root_post(request: Request):
-    return JSONResponse(
-        content={"message": "POST request received at root"},
-        status_code=200
-    )
 
-@app.get("/", response_class=HTMLResponse)
-async def root():
-    return "<h2>TDS Virtual TA API is running 🚀</h2>"
 # Verify API key is set
 if not API_KEY:
     logger.error("API_KEY environment variable is not set. The application will not function correctly.")
@@ -608,6 +599,16 @@ def parse_llm_response(response):
             "links": []
         }
 
+@app.post("/")
+async def root_post(request: Request):
+    return JSONResponse(
+        content={"message": "Root POST is working"},
+        status_code=200
+    )
+
+@app.get("/", response_class=HTMLResponse)
+async def root():
+    return "<h2>TDS Virtual TA API is running 🚀</h2>"
 
 # Define API routes
 @app.post("/query")
