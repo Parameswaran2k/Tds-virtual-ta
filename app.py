@@ -599,16 +599,13 @@ def parse_llm_response(response):
             "links": []
         }
 
-@app.post("/")
-async def root_post(request: Request):
-    return JSONResponse(
-        content={"message": "Root POST is working"},
-        status_code=200
-    )
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to TDS Virtual TA!"}
 
-@app.get("/", response_class=HTMLResponse)
-async def root():
-    return "<h2>TDS Virtual TA API is running 🚀</h2>"
+@app.post("/")
+async def handle_post_root(request: Request):
+    return JSONResponse({"error": "Please POST your queries to /query instead."})
 
 # Define API routes
 @app.post("/query")
